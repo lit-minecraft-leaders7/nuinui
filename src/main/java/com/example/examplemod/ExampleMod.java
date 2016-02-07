@@ -46,6 +46,8 @@ public class ExampleMod {
         customFood();
 
         MinecraftForge.EVENT_BUS.register(new BlockBreakEventHandler());
+
+        GameRegistry.registerBlock(new BlockRedstoneInput(), "redstone_input");
     }
 
 
