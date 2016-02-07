@@ -48,6 +48,8 @@ public class ExampleMod {
         MinecraftForge.EVENT_BUS.register(new BlockBreakEventHandler());
 
         GameRegistry.registerBlock(new BlockRedstoneInput(), "redstone_input");
+        GameRegistry.registerBlock(new BlockRedstoneClock(), "redstone_clock");
+
     }
 
 
