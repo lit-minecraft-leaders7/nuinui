@@ -51,6 +51,8 @@ public class ExampleMod {
         GameRegistry.registerBlock(new BlockRedstoneClock(), "redstone_clock");
 
         GameRegistry.registerItem(new ItemMySnowball(), "snow_ball");
+
+        GameRegistry.registerBlock(new FootprintsSand(), "footprintssand");
     }
 
 
