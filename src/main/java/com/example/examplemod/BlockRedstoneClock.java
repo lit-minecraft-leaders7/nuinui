@@ -9,7 +9,7 @@ import net.minecraft.world.World;
 import java.util.Random;
 
 /**
- * Created by frevmet on 16/02/07.
+ * Created by nui on 16/02/07.
  */
 public class BlockRedstoneClock extends Block {
     public BlockRedstoneClock() {
@@ -49,7 +49,7 @@ public class BlockRedstoneClock extends Block {
 
         world.scheduleBlockUpdateWithPriority(x, y, z, this, 5, 100);
     }
-    
+
     @Override
     public void onBlockAdded(World world, int x, int y, int z) {
         world.scheduleBlockUpdateWithPriority(x, y, z, this, 5, 100);

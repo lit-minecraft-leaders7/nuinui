@@ -50,6 +50,7 @@ public class ExampleMod {
         GameRegistry.registerBlock(new BlockRedstoneInput(), "redstone_input");
         GameRegistry.registerBlock(new BlockRedstoneClock(), "redstone_clock");
 
+        GameRegistry.registerItem(new ItemMySnowball(), "snow_ball");
     }
 
 
