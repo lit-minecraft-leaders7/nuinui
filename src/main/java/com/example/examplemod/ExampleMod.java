@@ -49,6 +49,8 @@ public class ExampleMod {
         GameRegistry.registerBlock(blocksound, "BlockSound");
         GameRegistry.addShapelessRecipe(new ItemStack(RAINBOW), new ItemStack(Blocks.dirt));
 
+        temporaryStone();
+
         customSword();
         customFood();
         imprisonmentSword();
@@ -64,6 +66,18 @@ public class ExampleMod {
         GameRegistry.registerItem(new ItemMySnowball(), "snow_ball");
 
         GameRegistry.registerBlock(new FootprintsSand(), "footprintssand");
+    }
+
+    public void temporaryStone() {
+        Block stone = new BlockTemporaryStone();
+
+        GameRegistry.registerBlock(stone, "temporary_stone");
+
+        GameRegistry.addRecipe(new ItemStack(stone),
+                " A ",
+                "AAA",
+                " A ",
+                'A', Blocks.stone);
     }
 
 
