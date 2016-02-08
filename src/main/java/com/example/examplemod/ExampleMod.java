@@ -47,6 +47,7 @@ public class ExampleMod {
         imprisonmentSword();
 
         MinecraftForge.EVENT_BUS.register(new BlockBreakEventHandler());
+        MinecraftForge.EVENT_BUS.register(new MyBlockBreakEventHandler());
 
         GameRegistry.registerBlock(new BlockRedstoneInput(), "redstone_input");
         GameRegistry.registerBlock(new BlockRedstoneClock(), "redstone_clock");
