@@ -1,10 +1,13 @@
 package com.example.examplemod;
 
+import cpw.mods.fml.client.registry.ClientRegistry;
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
+import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -12,6 +15,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraftforge.common.MinecraftForge;
+import org.lwjgl.input.Keyboard;
 
 @Mod(modid = ExampleMod.MODID, version = ExampleMod.VERSION)
 public class ExampleMod {
@@ -19,6 +23,8 @@ public class ExampleMod {
     public static final String VERSION = "1.0";
     public static final Block RAINBOW = new BlockRainbow();
     public static final Block blocksound = new BlockSound();
+    public static final KeyBinding LKey = new KeyBinding("key.l", Keyboard.KEY_L, "leveling_switch");
+    public static final MyBlockBreakEventHandler myBlockBreakEventHandler = new MyBlockBreakEventHandler();
 
     @EventHandler
     public void init(FMLInitializationEvent event) {
@@ -47,7 +53,9 @@ public class ExampleMod {
         imprisonmentSword();
 
         MinecraftForge.EVENT_BUS.register(new BlockBreakEventHandler());
-        MinecraftForge.EVENT_BUS.register(new MyBlockBreakEventHandler());
+        MinecraftForge.EVENT_BUS.register(myBlockBreakEventHandler);
+        ClientRegistry.registerKeyBinding(LKey);
+        FMLCommonHandler.instance().bus().register(new MyKeyInputHandler());
 
         GameRegistry.registerBlock(new BlockRedstoneInput(), "redstone_input");
         GameRegistry.registerBlock(new BlockRedstoneClock(), "redstone_clock");

@@ -3,10 +3,12 @@ package com.example.examplemod;
         import cpw.mods.fml.common.eventhandler.SubscribeEvent;
         import net.minecraft.block.Block;
         import net.minecraft.block.material.Material;
+        import net.minecraft.client.Minecraft;
         import net.minecraft.entity.player.EntityPlayer;
         import net.minecraft.init.Blocks;
         import net.minecraft.init.Items;
         import net.minecraft.item.Item;
+        import net.minecraft.util.ChatComponentText;
         import net.minecraft.world.World;
         import net.minecraftforge.event.world.BlockEvent;
 
@@ -15,9 +17,13 @@ package com.example.examplemod;
  */
 public class MyBlockBreakEventHandler {
     private static int MAX_DEPTH = 20;
+    private static boolean activeness = true;
 
     @SubscribeEvent
     public void onBlockBreak(BlockEvent.BreakEvent event) {
+        if (!activeness) {
+            return;
+        }
         EntityPlayer player = event.getPlayer();
         if (player == null) {
             return;
@@ -37,6 +43,16 @@ public class MyBlockBreakEventHandler {
         }
         event.setCanceled(true);
         breakBlock(event.world, event.x, event.y, event.z, 1);
+    }
+
+    public void toggleActiveness() {
+        Minecraft minecraft = Minecraft.getMinecraft();
+        activeness = !activeness;
+        if (activeness) {
+            minecraft.thePlayer.addChatComponentMessage(new ChatComponentText("Leveling Tool has been enabled."));
+        } else {
+            minecraft.thePlayer.addChatComponentMessage(new ChatComponentText("Leveling Tool had been disabled."));
+        }
     }
 
     private void breakBlock(World world, int x, int y, int z, int depth) {
