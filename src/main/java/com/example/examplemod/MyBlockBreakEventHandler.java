@@ -32,7 +32,7 @@ public class MyBlockBreakEventHandler {
         }
         Block block = event.block;
         if (!(block.getMaterial() == Material.sand || block.getMaterial() == Material.ground ||
-                block.getMaterial() == Material.grass)) {
+                block.getMaterial() == Material.grass || block.getMaterial() == Material.rock)) {
             return;
         }
         event.setCanceled(true);
@@ -47,11 +47,11 @@ public class MyBlockBreakEventHandler {
         Block block = world.getBlock(x, y, z);
 
         if (block.getMaterial() == Material.sand || block.getMaterial() == Material.ground ||
-                block.getMaterial() == Material.grass) {
+                block.getMaterial() == Material.grass || block.getMaterial() == Material.rock) {
             block.dropBlockAsItem(world, x, y, z, world.getBlockMetadata(x, y, z), 0);
             world.setBlock(x, y, z, Blocks.air);
             if (block.getMaterial() == Material.sand || block.getMaterial() == Material.ground ||
-                    block.getMaterial() == Material.grass) {
+                    block.getMaterial() == Material.grass || block.getMaterial() == Material.rock) {
                 breakBlock(world, x, y + 1, z, depth);
             }
             breakBlock(world, x + 1, y, z, depth + 1);
