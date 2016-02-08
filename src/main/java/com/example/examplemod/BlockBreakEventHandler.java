@@ -50,6 +50,7 @@ public class BlockBreakEventHandler {
             world.setBlock(x, y, z, Blocks.air);
             if (block.getMaterial() == Material.wood) {
                 breakBlock(world, x, y + 1, z, depth);
+                breakBlock(world, x, y - 1, z, depth);
             }
             breakBlock(world, x + 1, y, z, depth + 1);
             breakBlock(world, x - 1, y, z, depth + 1);
