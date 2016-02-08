@@ -48,10 +48,10 @@ public class BlockTemporaryStone extends Block {
     @Override
     public void updateTick(World world, int x, int y, int z, Random random) {
         int next = world.getBlockMetadata(x, y, z) + 1;
-        world.setBlockMetadataWithNotify(x, y, z, next, 2);
-        if (next != 4) {
-            world.scheduleBlockUpdateWithPriority(x, y, z, this, 100, 100);
-        } else {
+         if (next != 4) {
+             world.scheduleBlockUpdateWithPriority(x, y, z, this, 100, 100);
+             world.setBlockMetadataWithNotify(x, y, z, next, 2);
+         } else {
             destroyBlock(world, x, y, z);
         }
     }

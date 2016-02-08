@@ -1,5 +1,7 @@
 package com.example.examplemod;
 
+import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -7,6 +9,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.world.World;
+import net.minecraft.world.WorldManager;
 import net.minecraftforge.common.util.EnumHelper;
 
 /**
@@ -29,25 +33,48 @@ public class ImprisonmentSword extends ItemSword {
         if (!(attacker instanceof EntityPlayer)) {
             return true;
         }
-        enemy.setPosition(enemy.posX, enemy.posY + 1, enemy.posZ);
-        enemy.worldObj.setBlock((int) enemy.posX, (int) enemy.posY, (int) enemy.posZ + 1, Blocks.iron_bars);
-        enemy.worldObj.setBlock((int) enemy.posX + 1, (int) enemy.posY, (int) enemy.posZ, Blocks.iron_bars);
-        enemy.worldObj.setBlock((int) enemy.posX, (int) enemy.posY, (int) enemy.posZ - 1, Blocks.iron_bars);
-        enemy.worldObj.setBlock((int) enemy.posX - 1, (int) enemy.posY, (int) enemy.posZ, Blocks.iron_bars);
-        enemy.worldObj.setBlock((int) enemy.posX + 1, (int) enemy.posY, (int) enemy.posZ + 1, Blocks.iron_bars);
-        enemy.worldObj.setBlock((int) enemy.posX + 1, (int) enemy.posY, (int) enemy.posZ - 1, Blocks.iron_bars);
-        enemy.worldObj.setBlock((int) enemy.posX - 1, (int) enemy.posY, (int) enemy.posZ - 1, Blocks.iron_bars);
-        enemy.worldObj.setBlock((int) enemy.posX - 1, (int) enemy.posY, (int) enemy.posZ + 1, Blocks.iron_bars);
 
-        enemy.worldObj.setBlock((int) enemy.posX, (int) enemy.posY + 1, (int) enemy.posZ + 1, Blocks.iron_bars);
-        enemy.worldObj.setBlock((int) enemy.posX + 1, (int) enemy.posY + 1, (int) enemy.posZ, Blocks.iron_bars);
-        enemy.worldObj.setBlock((int) enemy.posX, (int) enemy.posY + 1, (int) enemy.posZ - 1, Blocks.iron_bars);
-        enemy.worldObj.setBlock((int) enemy.posX - 1, (int) enemy.posY + 1, (int) enemy.posZ, Blocks.iron_bars);
-        enemy.worldObj.setBlock((int) enemy.posX + 1, (int) enemy.posY + 1, (int) enemy.posZ + 1, Blocks.iron_bars);
-        enemy.worldObj.setBlock((int) enemy.posX + 1, (int) enemy.posY + 1, (int) enemy.posZ - 1, Blocks.iron_bars);
-        enemy.worldObj.setBlock((int) enemy.posX - 1, (int) enemy.posY + 1, (int) enemy.posZ - 1, Blocks.iron_bars);
-        enemy.worldObj.setBlock((int) enemy.posX - 1, (int) enemy.posY + 1, (int) enemy.posZ + 1, Blocks.iron_bars);
+
+        setIronBar(enemy, -1, 0, -1);
+        setIronBar(enemy, -1, 0, 0);
+        setIronBar(enemy, -1, 0, 1);
+        setIronBar(enemy, 0, 0, -1);
+        setIronBar(enemy, 0, 0, 1);
+        setIronBar(enemy, 1, 0, -1);
+        setIronBar(enemy, 1, 0, 0);
+        setIronBar(enemy, 1, 0, 1);
+
+        setIronBar(enemy, -1, 1, -1);
+        setIronBar(enemy, -1, 1, 0);
+        setIronBar(enemy, -1, 1, 1);
+        setIronBar(enemy, 0, 1, -1);
+        setIronBar(enemy, 0, 1, 1);
+        setIronBar(enemy, 1, 1, -1);
+        setIronBar(enemy, 1, 1, 0);
+        setIronBar(enemy, 1, 1, 1);
+
+        setIronBar(enemy, -1, 2, -1);
+        setIronBar(enemy, -1, 2, 0);
+        setIronBar(enemy, -1, 2, 1);
+        setIronBar(enemy, 0, 2, -1);
+        setIronBar(enemy, 0, 2, 1);
+        setIronBar(enemy, 1, 2, -1);
+        setIronBar(enemy, 1, 2, 0);
+        setIronBar(enemy, 1, 2, 1);
+
         enemy.setPosition(enemy.posX, enemy.posY + 1, enemy.posZ);
+
         return true;
+    }
+
+    private void setIronBar(EntityLivingBase enemy, int deltaX, int deltaY, int deltaZ) {
+        Block block = enemy.worldObj.getBlock((int) enemy.posX + deltaX, (int) enemy.posY + deltaY, (int) enemy.posZ + deltaZ);
+
+        if (block.getMaterial() != Material.air) {
+            return;
+        }
+
+        enemy.worldObj.setBlock(
+                (int) enemy.posX + deltaX, (int) enemy.posY + deltaY, (int) enemy.posZ + deltaZ, Blocks.iron_bars);
     }
 }
