@@ -1,6 +1,8 @@
 package com.example.examplemod;
 
         import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+        import cpw.mods.fml.relauncher.Side;
+        import cpw.mods.fml.relauncher.SideOnly;
         import net.minecraft.block.Block;
         import net.minecraft.block.material.Material;
         import net.minecraft.client.Minecraft;
@@ -16,7 +18,7 @@ package com.example.examplemod;
  * Created by nui on 16/02/08.
  */
 public class MyBlockBreakEventHandler {
-    private static int MAX_DEPTH = 20;
+    private static final int MAX_DEPTH = 20;
     private static boolean activeness = true;
 
     @SubscribeEvent
@@ -45,6 +47,7 @@ public class MyBlockBreakEventHandler {
         breakBlock(event.world, event.x, event.y, event.z, 1);
     }
 
+    @SideOnly(Side.CLIENT)
     public void toggleActiveness() {
         Minecraft minecraft = Minecraft.getMinecraft();
         activeness = !activeness;

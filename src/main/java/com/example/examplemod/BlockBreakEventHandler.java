@@ -14,7 +14,7 @@ import net.minecraftforge.event.world.BlockEvent;
  * Created by nui on 16/02/07.
  */
 public class BlockBreakEventHandler {
-    private static int MAX_DEPTH = 5;
+    private static final int MAX_DEPTH = 5;
 
     @SubscribeEvent
     public void onBlockBreak(BlockEvent.BreakEvent event) {

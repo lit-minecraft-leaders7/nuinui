@@ -41,6 +41,7 @@ public class ExampleMod {
                 'A', new ItemStack(Items.skull, 1, 4),
                 'B', Blocks.tnt,
                 'C', Items.gunpowder);
+
         //myblock
         GameRegistry.registerBlock(new MyBlock(), "myblock");
 
