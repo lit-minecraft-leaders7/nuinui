@@ -4,6 +4,8 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
@@ -37,11 +39,18 @@ public class BlockTemporaryStone extends Block {
     }
 
     @Override
+    public void onEntityWalking(World world, int x, int y, int z, Entity entity) {
+        if (entity instanceof EntityPlayer && world.getBlockMetadata(x, y, z) != 0) {
+            world.setBlockMetadataWithNotify(x, y, z, 0, 2);
+        }
+    }
+
+    @Override
     public void updateTick(World world, int x, int y, int z, Random random) {
         int next = world.getBlockMetadata(x, y, z) + 1;
         world.setBlockMetadataWithNotify(x, y, z, next, 2);
-        if (next != 3) {
-            world.scheduleBlockUpdateWithPriority(x, y, z, this, 5, 100);
+        if (next != 4) {
+            world.scheduleBlockUpdateWithPriority(x, y, z, this, 100, 100);
         } else {
             destroyBlock(world, x, y, z);
         }
