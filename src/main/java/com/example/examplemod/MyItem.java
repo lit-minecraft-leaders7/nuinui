@@ -34,10 +34,6 @@ public class MyItem extends ItemSword {
             return true;
         }
 
-        enemy.worldObj.setBlock((int) enemy.posX, (int) enemy.posY + 1, (int) enemy.posZ + 1, Blocks.glass);
-        enemy.worldObj.setBlock((int) enemy.posX + 1, (int) enemy.posY + 1, (int) enemy.posZ, Blocks.glass);
-        enemy.worldObj.setBlock((int) enemy.posX, (int) enemy.posY + 1, (int) enemy.posZ - 1, Blocks.glass);
-        enemy.worldObj.setBlock((int) enemy.posX - 1, (int) enemy.posY + 1, (int) enemy.posZ, Blocks.glass);
         enemy.addPotionEffect(new PotionEffect(Potion.moveSlowdown.id, 1200, 1));
         enemy.setFire(600);
         enemy.setPosition(enemy.posX, enemy.posY + 20, enemy.posZ);

@@ -44,6 +44,7 @@ public class ExampleMod {
 
         customSword();
         customFood();
+        imprisonmentSword();
 
         MinecraftForge.EVENT_BUS.register(new BlockBreakEventHandler());
 
@@ -66,6 +67,19 @@ public class ExampleMod {
                 "BAB",
                 " B ",
                 'A', new ItemStack(Items.diamond_sword),
+                'B', Items.gunpowder);
+    }
+
+    public void imprisonmentSword() {
+        Item sword = new ImprisonmentSword();
+
+        GameRegistry.registerItem(sword, "imprisonment_sword");
+
+        GameRegistry.addRecipe(new ItemStack(sword, 1, 50),
+                " B ",
+                "BAB",
+                " B ",
+                'A', new ItemStack(Items.iron_sword),
                 'B', Items.gunpowder);
     }
 
