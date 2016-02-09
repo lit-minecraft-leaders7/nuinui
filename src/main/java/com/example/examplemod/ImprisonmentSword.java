@@ -75,6 +75,7 @@ public class ImprisonmentSword extends ItemSword {
         }
 
         enemy.worldObj.setBlock(
-                (int) enemy.posX + deltaX, (int) enemy.posY + deltaY, (int) enemy.posZ + deltaZ, Blocks.iron_bars);
+                (int) enemy.posX + deltaX, (int) enemy.posY + deltaY, (int) enemy.posZ + deltaZ,
+                (Block)Block.blockRegistry.getObject("temporary_iron_bar"));
     }
 }

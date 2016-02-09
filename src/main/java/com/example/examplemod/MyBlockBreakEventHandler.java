@@ -18,7 +18,8 @@ package com.example.examplemod;
  * Created by nui on 16/02/08.
  */
 public class MyBlockBreakEventHandler {
-    private static final int MAX_DEPTH = 20;
+    private static int MAX_XZ_DEPTH = 20;
+    private static int MAX_Y_DEPTH = 40;
     private static boolean activeness = true;
 
     @SubscribeEvent
@@ -44,7 +45,7 @@ public class MyBlockBreakEventHandler {
             return;
         }
         event.setCanceled(true);
-        breakBlock(event.world, event.x, event.y, event.z, 1);
+        breakBlock(event.world, event.x, event.y, event.z, 1, 1);
     }
 
     @SideOnly(Side.CLIENT)
@@ -58,8 +59,8 @@ public class MyBlockBreakEventHandler {
         }
     }
 
-    private void breakBlock(World world, int x, int y, int z, int depth) {
-        if (depth > MAX_DEPTH) {
+    private void breakBlock(World world, int x, int y, int z, int xzDepth, int yDepth) {
+        if (xzDepth > MAX_XZ_DEPTH || yDepth > MAX_Y_DEPTH) {
             return;
         }
 
@@ -71,13 +72,12 @@ public class MyBlockBreakEventHandler {
             world.setBlock(x, y, z, Blocks.air);
             if (block.getMaterial() == Material.sand || block.getMaterial() == Material.ground ||
                     block.getMaterial() == Material.grass || block.getMaterial() == Material.rock) {
-                breakBlock(world, x, y + 1, z, depth + 1);
+                breakBlock(world, x, y + 1, z, xzDepth, yDepth + 1);
             }
-            breakBlock(world, x + 1, y, z, depth + 1);
-            breakBlock(world, x - 1, y, z, depth + 1);
-            breakBlock(world, x, y, z + 1, depth + 1);
-            breakBlock(world, x, y, z - 1, depth + 1);
+            breakBlock(world, x + 1, y, z, xzDepth + 1, yDepth);
+            breakBlock(world, x - 1, y, z, xzDepth + 1, yDepth);
+            breakBlock(world, x, y, z + 1, xzDepth + 1, yDepth);
+            breakBlock(world, x, y, z - 1, xzDepth + 1, yDepth);
         }
     }
-
 }
