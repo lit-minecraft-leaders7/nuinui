@@ -7,10 +7,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionEffect;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldManager;
 import net.minecraftforge.common.util.EnumHelper;
 
 /**
@@ -75,7 +71,6 @@ public class ImprisonmentSword extends ItemSword {
         }
 
         enemy.worldObj.setBlock(
-                (int) enemy.posX + deltaX, (int) enemy.posY + deltaY, (int) enemy.posZ + deltaZ,
-                (Block)Block.blockRegistry.getObject("temporary_iron_bar"));
+                (int) enemy.posX + deltaX, (int) enemy.posY + deltaY, (int) enemy.posZ + deltaZ, Blocks.iron_bars);
     }
 }
