@@ -105,6 +105,9 @@ public class ExampleMod {
                 " B ",
                 'A', new ItemStack(Items.iron_sword),
                 'B', Items.gunpowder);
+
+        Block fence = new BlockTemporaryIronBars();
+        GameRegistry.registerBlock(fence, "temporary_iron_bars");
     }
 
     public void customFood() {

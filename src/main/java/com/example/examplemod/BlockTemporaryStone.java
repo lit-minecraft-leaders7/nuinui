@@ -66,6 +66,4 @@ public class BlockTemporaryStone extends Block {
         block.dropBlockAsItem(world, x, y, z, 0, 0);
         world.setBlock(x, y, z, Blocks.air);
     }
-
-
 }
