@@ -18,13 +18,46 @@ package com.example.examplemod;
  * Created by nui on 16/02/08.
  */
 public class MyBlockBreakEventHandler {
-    private static int MAX_XZ_DEPTH = 20;
-    private static int MAX_Y_DEPTH = 40;
-    private static boolean activeness = true;
+    private enum LevelingModeState {
+        DISABLED,
+        SMALL,
+        MEDIUM,
+        LARGE;
+    }
+
+    private static LevelingModeState modeState = LevelingModeState.SMALL;
+
+    private int getMaxXzDepth(LevelingModeState state) {
+        Minecraft minecraft = Minecraft.getMinecraft();
+        switch (state) {
+            case SMALL:
+                return 5;
+            case MEDIUM:
+                return 15;
+            case LARGE:
+                return 45;
+            default:
+                return 0;
+        }
+    }
+
+    private int getMaxYDepth(LevelingModeState state) {
+        Minecraft minecraft = Minecraft.getMinecraft();
+        switch (state) {
+            case SMALL:
+                return 5;
+            case MEDIUM:
+                return 20;
+            case LARGE:
+                return 80;
+            default:
+                return 0;
+        }
+    }
 
     @SubscribeEvent
     public void onBlockBreak(BlockEvent.BreakEvent event) {
-        if (!activeness) {
+        if (modeState == LevelingModeState.DISABLED) {
             return;
         }
         EntityPlayer player = event.getPlayer();
@@ -49,18 +82,30 @@ public class MyBlockBreakEventHandler {
     }
 
     @SideOnly(Side.CLIENT)
-    public void toggleActiveness() {
+    public void changeModeState() {
         Minecraft minecraft = Minecraft.getMinecraft();
-        activeness = !activeness;
-        if (activeness) {
-            minecraft.thePlayer.addChatComponentMessage(new ChatComponentText("Leveling Tool has been enabled."));
-        } else {
-            minecraft.thePlayer.addChatComponentMessage(new ChatComponentText("Leveling Tool had been disabled."));
+        switch (modeState) {
+            case DISABLED:
+                modeState = LevelingModeState.SMALL;
+                minecraft.thePlayer.addChatComponentMessage(new ChatComponentText("Leveling Tool: small mode"));
+                break;
+            case SMALL:
+                modeState = LevelingModeState.MEDIUM;
+                minecraft.thePlayer.addChatComponentMessage(new ChatComponentText("Leveling Tool: medium mode"));
+                break;
+            case MEDIUM:
+                modeState = LevelingModeState.LARGE;
+                minecraft.thePlayer.addChatComponentMessage(new ChatComponentText("Leveling Tool: large mode"));
+                break;
+            default:
+                modeState = LevelingModeState.DISABLED;
+                minecraft.thePlayer.addChatComponentMessage(new ChatComponentText("Leveling Tool: disabled"));
+                break;
         }
     }
 
     private void breakBlock(World world, int x, int y, int z, int xzDepth, int yDepth) {
-        if (xzDepth > MAX_XZ_DEPTH || yDepth > MAX_Y_DEPTH) {
+        if (xzDepth > getMaxXzDepth(modeState) || yDepth > getMaxYDepth(modeState)) {
             return;
         }
 

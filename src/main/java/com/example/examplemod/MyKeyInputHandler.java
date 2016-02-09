@@ -12,7 +12,7 @@ public class MyKeyInputHandler {
     @SubscribeEvent
     public void onKeyInput(InputEvent.KeyInputEvent event) {
         if (ExampleMod.LKey.isPressed()) {
-            ExampleMod.myBlockBreakEventHandler.toggleActiveness();
+            ExampleMod.myBlockBreakEventHandler.changeModeState();
         }
     }
 }
