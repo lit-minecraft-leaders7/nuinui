@@ -27,9 +27,9 @@ public class MyBlockBreakEventHandler {
 
     private static LevelingModeState modeState = LevelingModeState.SMALL;
 
-    private int getMaxXzDepth(LevelingModeState state) {
+    private static int getMaxXzDepth() {
         Minecraft minecraft = Minecraft.getMinecraft();
-        switch (state) {
+        switch (modeState) {
             case SMALL:
                 return 5;
             case MEDIUM:
@@ -41,9 +41,9 @@ public class MyBlockBreakEventHandler {
         }
     }
 
-    private int getMaxYDepth(LevelingModeState state) {
+    private static int getMaxYDepth() {
         Minecraft minecraft = Minecraft.getMinecraft();
-        switch (state) {
+        switch (modeState) {
             case SMALL:
                 return 5;
             case MEDIUM:
@@ -105,7 +105,7 @@ public class MyBlockBreakEventHandler {
     }
 
     private void breakBlock(World world, int x, int y, int z, int xzDepth, int yDepth) {
-        if (xzDepth > getMaxXzDepth(modeState) || yDepth > getMaxYDepth(modeState)) {
+        if (xzDepth > getMaxXzDepth() || yDepth > getMaxYDepth()) {
             return;
         }
 
