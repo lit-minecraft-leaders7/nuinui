@@ -11,7 +11,6 @@ package com.example.examplemod;
         import net.minecraft.init.Items;
         import net.minecraft.item.Item;
         import net.minecraft.util.ChatComponentText;
-        import net.minecraft.world.World;
         import net.minecraftforge.event.world.BlockEvent;
 
 /**
@@ -31,11 +30,11 @@ public class MyBlockBreakEventHandler {
         Minecraft minecraft = Minecraft.getMinecraft();
         switch (modeState) {
             case SMALL:
-                return 5;
+                return 2;
             case MEDIUM:
-                return 15;
+                return 6;
             case LARGE:
-                return 45;
+                return 18;
             default:
                 return 0;
         }
@@ -45,11 +44,11 @@ public class MyBlockBreakEventHandler {
         Minecraft minecraft = Minecraft.getMinecraft();
         switch (modeState) {
             case SMALL:
-                return 5;
+                return 4;
             case MEDIUM:
-                return 20;
+                return 16;
             case LARGE:
-                return 80;
+                return 64;
             default:
                 return 0;
         }
@@ -78,7 +77,7 @@ public class MyBlockBreakEventHandler {
             return;
         }
         event.setCanceled(true);
-        breakBlock(event.world, event.x, event.y, event.z, 1, 1);
+        breakBlock(event, event.x, event.y, event.z, 1);
     }
 
     @SideOnly(Side.CLIENT)
@@ -104,25 +103,33 @@ public class MyBlockBreakEventHandler {
         }
     }
 
-    private void breakBlock(World world, int x, int y, int z, int xzDepth, int yDepth) {
-        if (xzDepth > getMaxXzDepth() || yDepth > getMaxYDepth()) {
+    private void breakBlock(BlockEvent.BreakEvent event, int x, int y, int z, int yDepth) {
+        if (!(event.x - getMaxXzDepth() <= x && x <= event.x + getMaxXzDepth())) {
             return;
         }
 
-        Block block = world.getBlock(x, y, z);
+        if (!(event.z - getMaxXzDepth() <= z && z <= event.z + getMaxXzDepth())) {
+            return;
+        }
+
+        if (yDepth > getMaxYDepth()) {
+            return;
+        }
+
+        Block block = event.world.getBlock(x, y, z);
 
         if (block.getMaterial() == Material.sand || block.getMaterial() == Material.ground ||
                 block.getMaterial() == Material.grass || block.getMaterial() == Material.rock) {
-            block.dropBlockAsItem(world, x, y, z, world.getBlockMetadata(x, y, z), 0);
-            world.setBlock(x, y, z, Blocks.air);
+            block.dropBlockAsItem(event.world, x, y, z, event.world.getBlockMetadata(x, y, z), 0);
+            event.world.setBlock(x, y, z, Blocks.air);
             if (block.getMaterial() == Material.sand || block.getMaterial() == Material.ground ||
                     block.getMaterial() == Material.grass || block.getMaterial() == Material.rock) {
-                breakBlock(world, x, y + 1, z, xzDepth, yDepth + 1);
+                breakBlock(event, x, y + 1, z, yDepth + 1);
+                breakBlock(event, x + 1, y, z, yDepth);
+                breakBlock(event, x - 1, y, z, yDepth);
+                breakBlock(event, x, y, z + 1, yDepth);
+                breakBlock(event, x, y, z - 1, yDepth);
             }
-            breakBlock(world, x + 1, y, z, xzDepth + 1, yDepth);
-            breakBlock(world, x - 1, y, z, xzDepth + 1, yDepth);
-            breakBlock(world, x, y, z + 1, xzDepth + 1, yDepth);
-            breakBlock(world, x, y, z - 1, xzDepth + 1, yDepth);
         }
     }
 }
