@@ -27,7 +27,38 @@ public class ExampleMod {
 
     @EventHandler
     public void init(FMLInitializationEvent event) {
-        //dirt to diamond
+        MyBlocks.myblock = new MyBlock();
+        MyBlocks.rainbow = new BlockRainbow();
+        MyBlocks.blocksound = new BlockSound();
+        MyBlocks.redstone_input = new BlockRedstoneInput();
+        MyBlocks.redstone_clock = new BlockRedstoneClock();
+        MyBlocks.footprintssand = new FootprintsSand();
+        MyBlocks.temporary_stone = new BlockTemporaryStone();
+
+        MyItems.myitem = new MyItem();
+        MyItems.imprisonment_sword = new ImprisonmentSword();
+        MyItems.mysnowball = new ItemMySnowball();
+
+        GameRegistry.registerBlock(MyBlocks.myblock, "myblock");
+        GameRegistry.registerBlock(MyBlocks.rainbow, "rainbow");
+        GameRegistry.registerBlock(MyBlocks.blocksound, "BlockSound");
+        GameRegistry.registerBlock(MyBlocks.temporary_stone, "temporary_stone");
+        GameRegistry.registerBlock(MyBlocks.redstone_input, "redstone_input");
+        GameRegistry.registerBlock(MyBlocks.redstone_clock, "redstone_clock");
+        GameRegistry.registerBlock(MyBlocks.footprintssand, "footprintssand");
+
+        GameRegistry.registerItem(MyItems.mysnowball, "snow_ball");
+        GameRegistry.registerItem(MyItems.myitem, "my_sword");
+        PotionEffect[] onigiri = {
+                new PotionEffect(Potion.regeneration.id, 1200, 1),
+                new PotionEffect(Potion.damageBoost.id, 1200, 1),
+                new PotionEffect(Potion.moveSpeed.id, 1200, 1),
+                new PotionEffect(Potion.jump.id, 600, 0)
+        };
+        GameRegistry.registerItem(new ItemModFood("Onigiri", 1, 0.5f, false, onigiri).setAlwaysEdible(), "Onigiri");
+        GameRegistry.registerItem(MyItems.imprisonment_sword, "imprisonment_sword");
+
+        GameRegistry.addShapelessRecipe(new ItemStack(MyBlocks.rainbow), new ItemStack(Blocks.dirt));
         GameRegistry.addRecipe(new ItemStack(Blocks.diamond_block),
                 "AAA",
                 "AAA",
@@ -40,83 +71,27 @@ public class ExampleMod {
                 'A', new ItemStack(Items.skull, 1, 4),
                 'B', Blocks.tnt,
                 'C', Items.gunpowder);
-
-        MyBlocks.myblock = new MyBlock();
-        MyBlocks.rainbow = new BlockRainbow();
-        MyBlocks.blocksound = new BlockSound();
-        MyBlocks.redstone_input = new BlockRedstoneInput();
-        MyBlocks.redstone_clock = new BlockRedstoneClock();
-        MyBlocks.footprintssand = new FootprintsSand();
-        MyBlocks.temporary_stone = new BlockTemporaryStone();
-
-        GameRegistry.registerBlock(MyBlocks.myblock, "myblock");
-        GameRegistry.registerBlock(MyBlocks.rainbow, "rainbow");
-        GameRegistry.addShapelessRecipe(new ItemStack(MyBlocks.rainbow), new ItemStack(Blocks.dirt));
-        GameRegistry.registerBlock(MyBlocks.blocksound, "BlockSound");
-
-        temporaryStone();
-
-        customSword();
-        customFood();
-        imprisonmentSword();
-
-        MinecraftForge.EVENT_BUS.register(new BlockBreakEventHandler());
-        MinecraftForge.EVENT_BUS.register(myBlockBreakEventHandler);
-        ClientRegistry.registerKeyBinding(LKey);
-        FMLCommonHandler.instance().bus().register(new MyKeyInputHandler());
-
-
-        GameRegistry.registerBlock(new BlockRedstoneInput(), "redstone_input");
-        GameRegistry.registerBlock(new BlockRedstoneClock(), "redstone_clock");
-        GameRegistry.registerItem(new ItemMySnowball(), "snow_ball");
-        GameRegistry.registerBlock(MyBlocks.footprintssand, "footprintssand");
-    }
-
-    public void temporaryStone() {
-        GameRegistry.registerBlock(MyBlocks.temporary_stone, "temporary_stone");
-
         GameRegistry.addRecipe(new ItemStack(MyBlocks.temporary_stone),
                 " A ",
                 "AAA",
                 " A ",
                 'A', Blocks.stone);
-    }
-
-
-    public void customSword() {
-        Item sword = new MyItem();
-
-        GameRegistry.registerItem(sword, "my_sword");
-
-        GameRegistry.addRecipe(new ItemStack(sword, 1, 50),
+        GameRegistry.addRecipe(new ItemStack(MyItems.myitem, 1, 50),
                 " B ",
                 "BAB",
                 " B ",
                 'A', new ItemStack(Items.diamond_sword),
                 'B', Items.gunpowder);
-    }
-
-    public void imprisonmentSword() {
-        Item sword = new ImprisonmentSword();
-
-        GameRegistry.registerItem(sword, "imprisonment_sword");
-
-        GameRegistry.addRecipe(new ItemStack(sword, 1, 50),
+        GameRegistry.addRecipe(new ItemStack(MyItems.imprisonment_sword, 1, 50),
                 " B ",
                 "BAB",
                 " B ",
                 'A', new ItemStack(Items.iron_sword),
                 'B', Items.gunpowder);
-    }
 
-    public void customFood() {
-        PotionEffect[] onigiri = {
-                new PotionEffect(Potion.regeneration.id, 1200, 1),
-                new PotionEffect(Potion.damageBoost.id, 1200, 1),
-                new PotionEffect(Potion.moveSpeed.id, 1200, 1),
-                new PotionEffect(Potion.jump.id, 600, 0)
-        };
-
-        GameRegistry.registerItem(new ItemModFood("Onigiri", 1, 0.5f, false, onigiri).setAlwaysEdible(), "Onigiri");
+        MinecraftForge.EVENT_BUS.register(new BlockBreakEventHandler());
+        MinecraftForge.EVENT_BUS.register(myBlockBreakEventHandler);
+        ClientRegistry.registerKeyBinding(LKey);
+        FMLCommonHandler.instance().bus().register(new MyKeyInputHandler());
     }
 }
