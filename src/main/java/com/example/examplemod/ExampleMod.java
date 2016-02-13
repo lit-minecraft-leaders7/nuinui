@@ -21,8 +21,7 @@ import org.lwjgl.input.Keyboard;
 public class ExampleMod {
     public static final String MODID = "examplemod";
     public static final String VERSION = "1.0";
-    public static final Block RAINBOW = new BlockRainbow();
-    public static final Block blocksound = new BlockSound();
+
     public static final KeyBinding LKey = new KeyBinding("key.l", Keyboard.KEY_L, "leveling_switch");
     public static final MyBlockBreakEventHandler myBlockBreakEventHandler = new MyBlockBreakEventHandler();
 
@@ -42,12 +41,18 @@ public class ExampleMod {
                 'B', Blocks.tnt,
                 'C', Items.gunpowder);
 
-        //myblock
-        GameRegistry.registerBlock(new MyBlock(), "myblock");
+        MyBlocks.myblock = new MyBlock();
+        MyBlocks.rainbow = new BlockRainbow();
+        MyBlocks.blocksound = new BlockSound();
+        MyBlocks.redstone_input = new BlockRedstoneInput();
+        MyBlocks.redstone_clock = new BlockRedstoneClock();
+        MyBlocks.footprintssand = new FootprintsSand();
+        MyBlocks.temporary_stone = new BlockTemporaryStone();
 
-        GameRegistry.registerBlock(RAINBOW, "rainbow");
-        GameRegistry.registerBlock(blocksound, "BlockSound");
-        GameRegistry.addShapelessRecipe(new ItemStack(RAINBOW), new ItemStack(Blocks.dirt));
+        GameRegistry.registerBlock(MyBlocks.myblock, "myblock");
+        GameRegistry.registerBlock(MyBlocks.rainbow, "rainbow");
+        GameRegistry.addShapelessRecipe(new ItemStack(MyBlocks.rainbow), new ItemStack(Blocks.dirt));
+        GameRegistry.registerBlock(MyBlocks.blocksound, "BlockSound");
 
         temporaryStone();
 
@@ -60,20 +65,17 @@ public class ExampleMod {
         ClientRegistry.registerKeyBinding(LKey);
         FMLCommonHandler.instance().bus().register(new MyKeyInputHandler());
 
+
         GameRegistry.registerBlock(new BlockRedstoneInput(), "redstone_input");
         GameRegistry.registerBlock(new BlockRedstoneClock(), "redstone_clock");
-
         GameRegistry.registerItem(new ItemMySnowball(), "snow_ball");
-
-        GameRegistry.registerBlock(new FootprintsSand(), "footprintssand");
+        GameRegistry.registerBlock(MyBlocks.footprintssand, "footprintssand");
     }
 
     public void temporaryStone() {
-        Block stone = new BlockTemporaryStone();
+        GameRegistry.registerBlock(MyBlocks.temporary_stone, "temporary_stone");
 
-        GameRegistry.registerBlock(stone, "temporary_stone");
-
-        GameRegistry.addRecipe(new ItemStack(stone),
+        GameRegistry.addRecipe(new ItemStack(MyBlocks.temporary_stone),
                 " A ",
                 "AAA",
                 " A ",
